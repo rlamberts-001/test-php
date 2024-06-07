@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HelloController!
+{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 800px;
+        width: 95%;
+        font: 18px / 1.5 sans-serif;
+    }
+
+    .example-wrapper code {
+        background: #F5F5F5;
+        padding: 2px 6px;
+    }
+</style>
+
+<div class="example-wrapper">
+
+    <h1>Java Script
+    </h1>
+
+    <div>
+
+        <h2>Invertir cadena</h2>
+        <div>
+            <input id ="cadena_normal" type="text" placeholder="Ingresar la cadena a invertir" onkeyup="onInputKeyUp()" />
+            
+            <div id="cadena_invertida" ></div>
+        </div>
+    </div>
+    <div>
+        <h2>Hello World</h2>
+    
+        <button id="myButton" >Mostrar mensaje</button>
+    </div>
+
+    <div>
+        <h2>Petición Ajax</h2>
+        
+        <button id="myButtonAJAX" >Solicitar datos</button>
+
+        <div id="result" style="border:solid 2px #446699; padding: 4px; overflow: auto;" ></div>
+    </div>
+</div>
+
+<script>
+    function invertirCadena(cadena) {
+        if (cadena == null)
+            return null;
+
+
+        let invertida = '';
+        for (i = cadena.length - 1; i >= 0; i--) {
+            invertida = invertida.concat(cadena[i]);
+        }
+        return invertida;
+    }
+
+    function filtra_pares(array){
+        console.log (array.filter(b => b % 2 == 0));
+    }
+
+
+    function onInputKeyUp() {
+        const cadena_invertida = document.getElementById('cadena_invertida');
+        const cadena_normal = document.getElementById('cadena_normal');
+
+        cadena_invertida.textContent = invertirCadena(cadena_normal.value);
+    }
+
+    document.getElementById('myButton').addEventListener('click', ()=>{
+        alert('Hello World!');
+    })
+
+    document.getElementById('myButtonAJAX').addEventListener('click', ()=>{
+        
+        const result = document.getElementById('result');
+
+        const url = 'https://freetestapi.com/api/v1/countries?limit=5';
+
+        const promise = fetch(url);
+
+        promise.then(res =>
+            res.json()).then(data => {
+                result.textContent = JSON.stringify(data);
+            })
+        })
+</script>
+{% endblock %}
